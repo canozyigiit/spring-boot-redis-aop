@@ -4,12 +4,14 @@ package com.redisaop.service;
 import com.redisaop.aspect.CacheTTL;
 import com.redisaop.model.User;
 import com.redisaop.repository.UserRepository;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Log4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @CacheTTL(ttlMinutes = 5)
+    @CacheTTL(ttlMinutes = 5,cacheName = "users")
     public List<User> getAll() {
         return userRepository.findAll();
     }

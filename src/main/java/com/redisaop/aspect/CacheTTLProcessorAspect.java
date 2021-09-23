@@ -25,21 +25,21 @@ public class CacheTTLProcessorAspect {
     public Object cacheTTL(ProceedingJoinPoint joinPoint) throws Throwable {
 
         // get the current method that is called , we need this to extract the method name
-        Method method = getCurrentMethod(joinPoint);
+        Method method = getCurrentMethod(joinPoint);//çalışan method
 
         // Get all the method params
-        Object[] parameters = joinPoint.getArgs();
+        Object[] parameters = joinPoint.getArgs();//parametreler
 
         // Use the method name and params to create a key
-        String key = CacheKeyGenerator.generateKey(method.getName(),parameters);
+        String key = CacheKeyGenerator.generateKey(method.getName(),parameters);//yeni bir key
 
         // call cache service to get the value for the given key if not execute  method to get the return object to be cached
-        Object returnObject = cacheService.cacheGet(key, method.getReturnType());
+        Object returnObject = cacheService.cacheGet(key, method.getReturnType());//bellekte var mı
         if (returnObject != null)
             return returnObject;
 
         // execute method to get the return object
-        returnObject = joinPoint.proceed(parameters);
+        returnObject = joinPoint.proceed(parameters);//devam
 
         CacheTTL cacheTTL = method.getAnnotation(CacheTTL.class);
 

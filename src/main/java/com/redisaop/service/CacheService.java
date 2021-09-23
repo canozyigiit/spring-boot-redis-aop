@@ -13,7 +13,8 @@ public class CacheService {
 
     @Autowired
     private RedisTemplate<String, Object> template;
-
+    //String : key type
+    //Object: value type
     @Value("${spring.redis.cache.enabled:true}")
     private boolean cacheEnabled;
 
@@ -42,7 +43,7 @@ public class CacheService {
         if (toBeCached == null)
             return;
 
-        cachePut(key, toBeCached, -1);
+        cachePut(key, toBeCached, 5);
     }
 
     public <T> T cacheGet(String key, Class<T> type) {
